@@ -14,6 +14,3 @@ const modelSchema = new Schema({
 });
 
 export default model('Categories', modelSchema);
-// const Category: Mongoose.Model<any> = Mongoose.model('Categories', modelSchema);
-
-// export default Category;
