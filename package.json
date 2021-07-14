@@ -2,13 +2,15 @@
   "name": "english-for-kids-api",
   "version": "1.0.0",
   "description": "",
-  "main": "./src/index.ts",
+  "main": "build/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --exec ts-node ./src/index.ts",
-    "start": "node dist/index.js",
-    "build": "tsc",
-    "postinstall": "npm run build"
+    "start": "node ./dist/app.js",
+    "watch": "nodemon",
+    "workdev": "ts-node ./src/app.ts",
+    "tsjs": "tsc ./src/app.ts",
+    "tsinto": "tsc",
+    "rebut": "heroku restart",
+    "lint": "eslint src"
   },
   "engines": {
     "node": "16.4.x"
