@@ -5,37 +5,6 @@ import User from '../models/users';
 
 const loginRouter = Router();
 
-// loginRouter.options('/', function (req: Request, res: Response) {
-//   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-//   // res.setHeader('Access-Control-Allow-Methods', '*');
-//   // res.setHeader('Access-Control-Allow-Headers', '*');
-//   res.end();
-// });
-
-// try {
-//   const { login, password } = req.body;
-//   const candidate = await User.findOne({ login });
-//   if (candidate) {
-//     const isSame = password === candidate.password;
-//     if (isSame) {
-//       req.session.save((err) => {
-//         req.session.user = { login: 'admin' };
-//         req.session.isAuthenticated = true;
-//         if (err) {
-//           throw err;
-//         }
-//         res.status(200).send(req.sessionID);
-//       });
-//     } else {
-//       res.status(404).send('Login or password is incorrect');
-//     }
-//   } else {
-//     res.status(404).send('Login or password is incorrect');
-//   }
-// } catch (err) {
-//   console.log(err);
-// }
-
 loginRouter.post('/', async (req: Request, res: Response) => {
   if (!req.body) res.status(500).json({ message: 'Something went wrong' });
 
