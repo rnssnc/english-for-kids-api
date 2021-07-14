@@ -7,6 +7,7 @@ import fs from 'fs';
 import loader from '../middleware/multer';
 import auth from '../middleware/auth';
 import Category from '../models/categories';
+import Words from '../models/words';
 
 const categoriesRouter = Router();
 
@@ -15,7 +16,7 @@ categoriesRouter.get('/', async (req: Request, res: Response) => {
 
   const pageOptions = {
     page: Number(_page) || 0,
-    limit: Number(_limit) || 3,
+    limit: Number(_limit) || 2,
   };
 
   if (pageOptions.page === -1) {
@@ -76,7 +77,7 @@ categoriesRouter.post('/', [auth, loader.single('image')], async (req: Request, 
 categoriesRouter.put('/', [auth, loader.single('image')], async (req: Request, res: Response) => {
   Category.findOne({ title: req.body.title }, async (err: CallbackError, docs: any) => {
     if (docs && docs.id !== req.body.id) {
-      res.status(401).json({ message: 'This name is already taken' });
+      res.status(409).json({ message: 'This name is already taken' });
       return;
     }
 
@@ -116,13 +117,20 @@ categoriesRouter.put('/', [auth, loader.single('image')], async (req: Request, r
 
 categoriesRouter.delete('/', auth, (req: Request, res: Response) => {
   // eslint-disable-next-line no-underscore-dangle
-  Category.findByIdAndDelete(req.body._id, null, (err: CallbackError) => {
+  Category.findByIdAndDelete(req.body._id, null, (err: CallbackError, cat: any) => {
     if (err) {
       res.status(404).json(err);
       return;
     }
 
-    res.status(200).json({ success: true });
+    Words.deleteMany({ category: cat.title }, undefined, (error: CallbackError) => {
+      if (err) {
+        res.status(404).json(error);
+        return;
+      }
+
+      res.status(200).json({ success: true });
+    });
   });
 });
 
