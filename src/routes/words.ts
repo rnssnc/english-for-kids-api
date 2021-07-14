@@ -16,7 +16,7 @@ wordsRouter.get('/:category/words', async (req: Request, res: Response) => {
 
   const pageOptions = {
     page: Number(_page) || 0,
-    limit: Number(_limit) || 3,
+    limit: Number(_limit) || 2,
   };
 
   if (pageOptions.page === -1) {
