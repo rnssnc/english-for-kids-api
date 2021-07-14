@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/app.js",
   "scripts": {
-    "start": "node ./dist/app.js",
+    "start": "node ./dist/index.js",
     "watch": "nodemon",
     "workdev": "ts-node ./src/app.ts",
     "tsjs": "tsc ./src/app.ts",
