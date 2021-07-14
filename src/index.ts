@@ -40,7 +40,7 @@ app.get('/', (req: Express.Request, res: Express.Response) => {
   res.send('rnssnc');
 });
 
-const PORT = process.env.PORT || 3003;
+const PORT = process.env.PORT || 80;
 
 async function start() {
   try {
