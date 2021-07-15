@@ -27,7 +27,10 @@ wordsRouter.get('/:category/words', async (req: Request, res: Response) => {
 
   const title = req.params.category.split('-').join(' ');
 
-  const category = await Categories.findOne({ title });
+  const category = await Categories.findOne({ title }, null, null, (error: CallbackError) => {
+    console.log(error);
+    return null;
+  });
 
   if (!category) res.status(404).send({ message: 'category not found' });
 

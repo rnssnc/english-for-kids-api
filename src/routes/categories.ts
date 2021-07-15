@@ -122,15 +122,15 @@ categoriesRouter.delete('/', auth, (req: Request, res: Response) => {
       res.status(404).json(err);
       return;
     }
-    console.log(cat);
+
+    res.status(200).json({ success: true });
+
     if (cat && cat.title) {
       Words.deleteMany({ category: cat.title }, undefined, (error: CallbackError) => {
         if (err) {
-          res.status(404).json(error);
+          console.log(err);
           return;
         }
-
-        res.status(200).json({ success: true });
       });
     }
   });
