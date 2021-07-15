@@ -97,12 +97,24 @@ categoriesRouter.put('/', [auth, loader.single('image')], async (req: Request, r
         data.imgSrc = result.url;
       }
 
-      Category.findByIdAndUpdate(req.body.id, data, (error: CallbackError) => {
+      Category.findByIdAndUpdate(req.body.id, data, (error: CallbackError, categ: any) => {
         if (err) {
           res.status(500).json(error);
           return;
         }
-        res.status(200).json({ ...req.body, _id: req.body.id, ...data });
+
+        Words.updateMany(
+          { category: categ.title },
+          { category: req.body.title },
+          null,
+          (updateError: CallbackError) => {
+            if (err) {
+              console.log(updateError);
+              return;
+            }
+            res.status(200).json({ ...req.body, _id: req.body.id, ...data });
+          },
+        );
       });
     } catch (error) {
       res.send(error);
