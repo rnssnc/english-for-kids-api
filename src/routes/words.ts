@@ -16,18 +16,23 @@ wordsRouter.get('/:category/words', async (req: Request, res: Response) => {
 
   const pageOptions = {
     page: Number(_page) || 0,
-    limit: Number(_limit) || 3,
+    limit: Number(_limit) || 2,
   };
 
+  const title = req.params.category.split('-').join(' ');
+
+  if (!title) return res.status(404);
+
   if (pageOptions.page === -1) {
-    const data = await Words.find();
+    const data = await Words.find({ category: title });
     res.status(200).json(data);
     return;
   }
 
-  const title = req.params.category.split('-').join(' ');
-
-  const category = await Categories.findOne({ title });
+  const category = await Categories.findOne({ title }, null, null, (error: CallbackError) => {
+    console.log(error);
+    return null;
+  });
 
   if (!category) res.status(404).send({ message: 'category not found' });
 
